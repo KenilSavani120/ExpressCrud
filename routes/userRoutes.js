@@ -1,4 +1,4 @@
-import {createUserData, deleteUserData, fetchData, getStudentsByID, pagination_fetch_Data, updateUserData}   from "../controllers/userController.js";
+import {createUserData, deleteUser,  getUsers,  getUsersById,  updateUser}   from "../controllers/userController.js";
 import express from 'express';
 
 const route = express.Router();
@@ -10,7 +10,7 @@ route.get("/", getUsers);
 // route.get("/filter",pagination_fetch_Data)
 
 // Get Users by id
-route.get('./:id',getStudentsByID)
+route.get('/:id',getUsersById)
 
 // TO ADD USER
 route.post("/",createUserData)

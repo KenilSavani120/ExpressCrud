@@ -2,7 +2,7 @@ import { mySqlPool } from "../dataBase.js"
 
 
 // Fetch All data
-export  const fetchData = async (req,res)=>{
+export  const getUsers = async (req,res)=>{
     try {
         const [rows] = await mySqlPool.query('SELECT * FROM users')
         if(!rows){
@@ -10,10 +10,10 @@ export  const fetchData = async (req,res)=>{
                 message :"No records Founds"
             })
         }
-        res.status(200).send({
-            Message : " All Students Records",
+        return res.status(200).send({
+            message : " All Students Records",
             totalstudents : rows.length,
-            rows
+            data:rows
         })
     } catch (error) {
         console.error(error); // Log the error for debugging
@@ -50,16 +50,16 @@ export  const pagination_fetch_Data = async (req,res)=>{
 }}
 
 // Get Students By ID
-export const getStudentsByID = async ()=>{
+export const getUsersById = async (req,res)=>{
     try {
         const userId = req.params.id
         if(!userId){
-            return res.status(404).send({
+            return res.status(400).send({
                 message : "Invalid OR provide student id"
             })
         }
         // const data = await mySqlPool.query  (`SELECT * FORM users WHERE id=${userId}`)
-        const data = await mySqlPool.query('SELECT * FROM users  WHERE id=?',[userId])
+        const [data] = await mySqlPool.query('SELECT * FROM users  WHERE id=?',[userId])
         if(!data){
             return res.status(404).send({
                 message:"No Record Found"
@@ -106,7 +106,7 @@ export const createUserData = async (req,res)=>{
     }
 }
 
-export const updateUserData = async(req,res)=>{
+export const updateUser = async(req,res)=>{
     try {
         
         const userId = req.params.id
@@ -137,7 +137,7 @@ export const updateUserData = async(req,res)=>{
     }
 } 
 
-export const deleteUserData = async(req,res)=>{
+export const deleteUser = async(req,res)=>{
     try {
 
         const userId = req.params.id
